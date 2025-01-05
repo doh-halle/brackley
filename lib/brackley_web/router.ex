@@ -175,6 +175,9 @@ defmodule BrackleyWeb.Router do
     # put "/reviews/:id", ReviewController, :update
     # patch "/reviews/:id", ReviewController, :update
     # delete "/reviews/:id", ReviewController, :delete
+
+    # Comments
+    resources "/comments", CommentController
   end
 
   scope "/", BrackleyWeb do
