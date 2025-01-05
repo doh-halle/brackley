@@ -1,0 +1,118 @@
+<.flash_group flash={@flash} />
+
+<main>
+  <article>
+    <!-- 
+        - #HERO
+      -->
+    <section
+      class="section hero"
+      aria-label="hero"
+      id="home"
+      style="background-image: url('/images/hero-banner.jpg')"
+    >
+      <div class="container">
+        <p class="hero-subtitle">Brackley</p>
+
+        <h1 class="h1 hero-title">Discover the Best Restaurants in England</h1>
+
+        <form action="" class="footer-form">
+          <input
+            type="search"
+            name="email_address"
+            aria-label="search"
+            placeholder="Search for restaurants or Dishes"
+            required
+            class="search-field"
+          />
+
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        <div class="social-wrapper">
+          <p class="social-title">Connect with us:</p>
+
+          <ul class="social-list">
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <!-- 
+        - #CATEGORIES
+      -->
+    <section class="section category" aria-label="category" id="category">
+      <div class="container">
+        <div class="title-wrapper">
+          <h2 class="h2 section-title">Restaurant Categories</h2>
+        </div>
+        <div class="grid-list">
+          <%= for category <- @categories do %>
+            <div class="category-card">
+              <h3 class="h3">
+                <.link href={~p"/categories/#{category.id}"} class="card-title">
+                  <%= category.title %>
+                </.link>
+              </h3>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+    <!-- 
+        - #RESTAURANTS
+      -->
+    <section class="restaurant" aria-label="restaurant" id="restaurant">
+      <div class="container">
+        <div class="title-wrapper">
+          <h2 class="h2 section-title">Restaurants</h2>
+        </div>
+        <div class="grid-list">
+          <%= for restaurant <- @restaurants do %>
+            <.link href={~p"/restaurants/#{restaurant.id}"}>
+              <div class="restaurant-card">
+                <figure class="card-banner img-holder" style="--width:350px; --height: 300px">
+                  <img
+                    class="img-cover"
+                    src={restaurant.image_url}
+                    alt={restaurant.name}
+                    loading="lazy"
+                    width="350px"
+                    height="300px"
+                  />
+                </figure>
+                <div class="card-content">
+                  <h3 class="h3 card-title">
+                    <%= restaurant.name %>
+                  </h3>
+                  <p class="card-text">
+                    <%= restaurant.description %>
+                  </p>
+                </div>
+              </div>
+            </.link>
+          <% end %>
+        </div>
+      </div>
+    </section>
+    <!-- 
+        - #NEWSLETTER
+      -->
+  </article>
+</main>

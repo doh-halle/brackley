@@ -16,9 +16,9 @@
   <body class="bg-white antialiased">
     <header class="header" data-header>
       <div class="container">
-        <a href="#" class="logo">
+        <.link href="/" class="logo">
           Brackley<span class="span">.</span>
-        </a>
+        </.link>
 
         <nav class="navbar" data-navbar>
           <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler>
@@ -78,48 +78,139 @@
     </header>
 
     <%= @inner_content %>
+    <!-- 
+    - #FOOTER
+  -->
+    <footer class="footer">
+      <div class="footer-top section">
+        <div class="container">
+          <div class="footer-list">
+            <p class="footer-list-title">Join Our Newsletter</p>
 
-    <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
-      <%= if @current_administrator do %>
-        <li class="text-[0.8125rem] leading-6 text-zinc-900">
-          <%= @current_administrator.full_name %>
-        </li>
-        <li>
-          <.link
-            href={~p"/administrators/settings"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Settings
-          </.link>
-        </li>
-        <li>
-          <.link
-            href={~p"/administrators/log_out"}
-            method="delete"
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Log out
-          </.link>
-        </li>
-      <% else %>
-        <li>
-          <.link
-            href={~p"/administrators/register"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Register
-          </.link>
-        </li>
-        <li>
-          <.link
-            href={~p"/administrators/log_in"}
-            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
-          >
-            Log in
-          </.link>
-        </li>
-      <% end %>
-    </ul>
+            <p class="footer-list-text">
+              Receive information about top rated restaurants, special deals, and events in the UK.
+            </p>
+
+            <form action="" class="footer-form">
+              <input
+                type="email"
+                name="email_address"
+                aria-label="email"
+                placeholder="Enter email"
+                required
+                class="email-field"
+              />
+
+              <button type="submit" class="btn btn-secondary">Subscribe Now</button>
+            </form>
+          </div>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Popular Restaurants</p>
+            </li>
+
+            <li>
+              <.link href={~p"/restaurants/4"} class="footer-link">Dallas Fine Dining</.link>
+            </li>
+
+            <li>
+              <.link href={~p"/restaurants/8"} class="footer-link">MJ's Corner</.link>
+            </li>
+
+            <li>
+              <.link href={~p"/restaurants/6"} class="footer-link">White House Restaurant</.link>
+            </li>
+
+            <li>
+              <.link href={~p"/restaurants/7"} class="footer-link">Saraman Restaurant</.link>
+            </li>
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Help Links</p>
+            </li>
+
+            <li>
+              <.link href={~p"/"} class="footer-link">About Brackley</.link>
+            </li>
+
+            <li>
+              <.link href={~p"/"} class="footer-link">Report Fraud</.link>
+            </li>
+
+            <li>
+              <.link href={~p"/"} class="footer-link">Work with Us</.link>
+            </li>
+
+            <li>
+              <.link href={~p"/"} class="footer-link">Contact Us</.link>
+            </li>
+          </ul>
+
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title address-title">Contact</p>
+            </li>
+
+            <li>
+              <address class="address">
+                13 Shearwater Close,<br /> Gosport, PO13 0RB
+              </address>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <p class="copyright">
+            &copy; 2024 Brackley
+            Site by <a href="" class="copyright-link">Doh Halle</a>
+          </p>
+
+          <ul class="footer-bottom-list">
+            <%= if @current_administrator do %>
+              <li class="admin-name">
+                <%= @current_administrator.full_name %>
+              </li>
+              <li class="footer-bottom-item">
+                <.link href={~p"/administrators/settings"} class="footer-bottom-link">
+                  Settings
+                </.link>
+              </li>
+              <li class="footer-bottom-item">
+                <.link
+                  href={~p"/administrators/log_out"}
+                  method="delete"
+                  class="footer-bottom-link"
+                >
+                  Log out
+                </.link>
+              </li>
+            <% else %>
+              <%!-- <li class="footer-bottom-item">
+                <.link href={~p"/administrators/register"} class="footer-bottom-link">
+                  Register
+                </.link>
+              </li> --%>
+              <li class="footer-bottom-item">
+                <.link href={~p"/administrators/log_in"} class="footer-bottom-link">
+                  Admin
+                </.link>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <!-- 
+    - #BACK TO TOP
+  -->
+    <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+      <ion-icon name="chevron-up" aria-hidden="true"></ion-icon>
+    </a>
     <!-- 
     - custom js link
   -->

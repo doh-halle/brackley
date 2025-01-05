@@ -10,8 +10,8 @@ defmodule BrackleyWeb.CategoryController do
   end
 
   def new(conn, _params) do
-    id = conn.assigns.current_administrator.id
-    changeset = Administration.change_category(%Category{administrator_id: id})
+    administrator_id = conn.assigns.current_administrator.id
+    changeset = Administration.change_category(%Category{administrator_id: administrator_id})
 
     render(conn, :new, changeset: changeset)
   end
@@ -35,8 +35,14 @@ defmodule BrackleyWeb.CategoryController do
 
   def edit(conn, %{"id" => id}) do
     category = Administration.get_category!(id)
-    changeset = Administration.change_category(category)
-    render(conn, :edit, category: category, changeset: changeset)
+
+    changeset =
+      Administration.change_category(category)
+
+    render(conn, :edit,
+      category: category,
+      changeset: changeset
+    )
   end
 
   def update(conn, %{"id" => id, "category" => category_params}) do
