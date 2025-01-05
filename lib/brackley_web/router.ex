@@ -23,25 +23,25 @@ defmodule BrackleyWeb.Router do
   scope "/", BrackleyWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", PageController, :index
 
     # # Categories
-    resources "/categories", CategoryController, only: [:index, :show]
+    # resources "/categories", CategoryController, only: [:index, :show]
     # # get "/categories", CategoryController, :index
     # # get "/categories/:id", CategoryController, :show
 
     # # # Reviews
-    resources "/reviews", ReviewController, only: [:index, :show]
+    # resources "/reviews", ReviewController, only: [:index, :show]
     # get "/reviews", ReviewController, :index
     # get "/reviews/:id", ReviewController, :show
 
     # # # Restaurants
-    resources "/restaurants", RestaurantController, only: [:index, :show]
+    # resources "/restaurants", RestaurantController, only: [:index, :show]
     # # get "/restaurants", RestaurantController, :index
     # # get "/restaurants/:id", RestaurantController, :show
 
     # # # Meals
-    resources "/meals", MealController, only: [:index, :show]
+    # resources "/meals", MealController, only: [:index, :show]
     # # get "/meals", MealController, :index
     # # get "/meals/:id", MealController, :show
   end
@@ -94,7 +94,8 @@ defmodule BrackleyWeb.Router do
         :confirm_email
 
     # Categories
-    resources "/categories", CategoryController, only: [:new, :create, :edit, :update, :delete]
+    resources "/categories", CategoryController
+    # resources "/categories", CategoryController, only: [:new, :create, :edit, :update, :delete]
 
     # get "/categories/new", CategoryController, :new
     # post "/categories", CategoryController, :create
@@ -105,7 +106,9 @@ defmodule BrackleyWeb.Router do
     # delete "/categories/:id", CategoryController, :delete
 
     # Restaurants
-    resources "/restaurants", RestaurantController, only: [:new, :create, :edit, :update, :delete]
+    resources "/restaurants", RestaurantController
+
+    # resources "/restaurants", RestaurantController, only: [:new, :create, :edit, :update, :delete]
 
     # get "/restaurants/new", RestaurantController, :new
     # post "/restaurants", RestaurantController, :create
@@ -116,7 +119,9 @@ defmodule BrackleyWeb.Router do
     # delete "/restaurants/:id", RestaurantController, :delete
 
     # Meals
-    resources "/meals", MealController, only: [:new, :create, :edit, :update, :delete]
+    resources "/meals", MealController
+
+    # resources "/meals", MealController, only: [:new, :create, :edit, :update, :delete]
 
     # get "/meals/new", MealController, :new
     # post "/meals", MealController, :create
@@ -160,7 +165,8 @@ defmodule BrackleyWeb.Router do
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
 
     # Reviews
-    resources "/reviews", ReviewController, only: [:new, :create, :edit, :update, :delete]
+    resources "/reviews", ReviewController
+    # resources "/reviews", ReviewController, only: [:new, :create, :edit, :update, :delete]
 
     # get "/reviews/new", ReviewController, :new
     # post "/reviews", ReviewController, :create
@@ -169,6 +175,9 @@ defmodule BrackleyWeb.Router do
     # put "/reviews/:id", ReviewController, :update
     # patch "/reviews/:id", ReviewController, :update
     # delete "/reviews/:id", ReviewController, :delete
+
+    # Comments
+    resources "/comments", CommentController
   end
 
   scope "/", BrackleyWeb do
