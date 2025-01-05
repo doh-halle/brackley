@@ -1,0 +1,18 @@
+<.header>
+  Meal <%= @meal.id %>
+  <:subtitle>This is a meal record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/meals/#{@meal}/edit"}>
+      <.button>Edit meal</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @meal.name %></:item>
+  <:item title="Description"><%= @meal.description %></:item>
+  <:item title="Image url"><%= @meal.image_url %></:item>
+  <:item title="Price"><%= @meal.price %></:item>
+</.list>
+
+<.back navigate={~p"/meals"}>Back to meals</.back>

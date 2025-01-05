@@ -1,0 +1,13 @@
+<.simple_form :let={f} for={@changeset} action={@action}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:title]} type="text" label="Title" />
+  <.input field={f[:description]} type="text" label="Description" />
+  <.input field={f[:category_slug]} type="text" label="Category slug" />
+  <.input field={f[:image_url]} type="text" label="Image url" />
+  <.input field={f[:administrator_id]} readonly="true" type="text" label="Administrator Id" />
+  <:actions>
+    <.button>Save Category</.button>
+  </:actions>
+</.simple_form>

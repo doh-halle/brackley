@@ -1,0 +1,8 @@
+<.header>
+  New Restaurant
+  <:subtitle>Use this form to manage restaurant records in your database.</:subtitle>
+</.header>
+
+<.restaurant_form changeset={@changeset} category_list={@category_list} action={~p"/restaurants"} />
+
+<.back navigate={~p"/restaurants"}>Back to restaurants</.back>

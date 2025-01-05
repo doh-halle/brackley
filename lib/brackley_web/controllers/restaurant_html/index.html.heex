@@ -1,0 +1,32 @@
+<.header>
+  Listing Restaurants
+  <:actions>
+    <.link navigate={~p"/restaurants/new"}>
+      <.button>New Restaurant</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="restaurants" rows={@restaurants} row_click={&JS.navigate(~p"/restaurants/#{&1}")}>
+  <:col :let={restaurant} label="Name"><%= restaurant.name %></:col>
+  <:col :let={restaurant} label="Description"><%= restaurant.description %></:col>
+  <:col :let={restaurant} label="Image url"><%= restaurant.image_url %></:col>
+  <:col :let={restaurant} label="Address"><%= restaurant.address %></:col>
+  <:col :let={restaurant} label="Phone number"><%= restaurant.phone_number %></:col>
+  <:action :let={restaurant}>
+    <div class="sr-only">
+      <.link navigate={~p"/restaurants/#{restaurant}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/restaurants/#{restaurant}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={restaurant}>
+    <.link href={~p"/restaurants/#{restaurant}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.table id="categories" rows={@categories}>
+  <:col :let={category} label="Restaurant Category"><%= category.title %></:col>
+  <:col :let={category} label="Category Id"><%= category.id %></:col>
+</.table>

@@ -1,0 +1,20 @@
+<div class="mx-auto max-w-sm">
+  <.header class="text-center">
+    No confirmation instructions received?
+    <:subtitle>We'll send a new confirmation link to your inbox</:subtitle>
+  </.header>
+
+  <.simple_form :let={f} for={@conn.params["administrator"]} as={:administrator} action={~p"/administrators/confirm"}>
+    <.input field={f[:email]} type="email" placeholder="Email" required />
+    <:actions>
+      <.button phx-disable-with="Sending..." class="w-full">
+        Resend confirmation instructions
+      </.button>
+    </:actions>
+  </.simple_form>
+
+  <p class="text-center mt-4">
+    <.link href={~p"/administrators/register"}>Register</.link>
+    | <.link href={~p"/administrators/log_in"}>Log in</.link>
+  </p>
+</div>

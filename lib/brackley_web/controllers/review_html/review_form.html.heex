@@ -1,0 +1,27 @@
+<.simple_form :let={f} for={@changeset} action={@action} meal_list={@meal_list}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:review]} type="text" label="Review" />
+  <.input field={f[:rating]} type="select" required="true" label="Rating" prompt="Choose a Rating" options={[1, 2, 3, 4, 5]} />
+    <%!-- <.input
+    field={f[:status]}
+    type="select"
+    label="Status"
+    prompt="Choose a value"
+    options={Ecto.Enum.values(Brackley.Account.Review, :status)}
+  /> --%>
+  <.input 
+    field={f[:meal_id]}
+    label="Meal"
+    type="select"
+    prompt="Select a Meal"
+    value={}
+    options={@meal_list}
+    required="true"
+  />
+  <.input field={f[:user_id]} readonly="true" type="text" label="User Id" />
+  <:actions>
+    <.button>Save Review</.button>
+  </:actions>
+</.simple_form>

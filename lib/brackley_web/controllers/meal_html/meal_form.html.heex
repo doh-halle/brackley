@@ -1,0 +1,22 @@
+<.simple_form :let={f} for={@changeset} action={@action} restaurant_list={@restaurant_list}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:name]} type="text" label="Name" />
+  <.input field={f[:description]} type="text" label="Description" />
+  <.input field={f[:image_url]} type="text" label="Image url" />
+  <.input field={f[:price]} type="number" label="Price" />
+  <.input 
+    field={f[:restaurant_id]}
+    label="Restaurant"
+    type="select"
+    prompt="Select a Restaurant"
+    value={}
+    options={@restaurant_list}
+    required="true"
+  />
+  <.input field={f[:administrator_id]} readonly="true" type="text" label="Administrator Id" />
+  <:actions>
+    <.button>Save Meal</.button>
+  </:actions>
+</.simple_form>

@@ -1,0 +1,23 @@
+<.header>
+  Restaurant <%= @restaurant.id %> 
+  <:subtitle>This is a restaurant record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/restaurants/#{@restaurant}/edit"}>
+      <.button>Edit restaurant</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @restaurant.name %></:item>
+  <:item title="Description"><%= @restaurant.description %></:item>
+  <:item title="Image url"><%= @restaurant.image_url %></:item>
+  <:item title="Address"><%= @restaurant.address %></:item>
+  <:item title="Phone number"><%= @restaurant.phone_number %></:item>
+  <:item title="Category"><%= @category.title %></:item>
+</.list>
+<.link href={~p"/reviews"}>
+  <.button>Reviews</.button>
+</.link>
+
+<.back navigate={~p"/restaurants"}>Back to restaurants</.back>

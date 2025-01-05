@@ -1,0 +1,8 @@
+<.header>
+  Edit Meal <%= @meal.id %>
+  <:subtitle>Use this form to manage meal records in your database.</:subtitle>
+</.header>
+
+<.meal_form changeset={@changeset} restaurant_list={@restaurant_list} action={~p"/meals/#{@meal}"} />
+
+<.back navigate={~p"/meals"}>Back to meals</.back>

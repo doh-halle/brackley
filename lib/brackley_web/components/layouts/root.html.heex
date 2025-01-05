@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title suffix=" · Phoenix Framework">
+      <%= assigns[:page_title] || "Brackley" %>
+    </.live_title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/style.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+      <script defer phx-track-static type="text/javascript" src={~p"/assets/script.js"}>
+    </script>
+  </head>
+  <body class="bg-white antialiased">
+    <header class="header" data-header>
+      <div class="container">
+        <a href="#" class="logo">
+          Brackley<span class="span">.</span>
+        </a>
+
+        <nav class="navbar" data-navbar>
+          <button class="nav-toggle-btn" aria-label="close menu" data-nav-toggler>
+            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+          </button>
+
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <a href="/categories" class="navbar-link" data-nav-link>Categories</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="/meals" class="navbar-link" data-nav-link>Dishes</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="/reviews" class="navbar-link" data-nav-link>Reviews</a>
+            </li>
+          </ul>
+        </nav>
+
+        <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
+          <%= if @current_user do %>
+            <li class="span">
+              <%= @current_user.first_name %>
+            </li>
+            <li class="btn btn-primary">
+              <.link href={~p"/users/settings"}>
+                Settings
+              </.link>
+            </li>
+            <li class="btn btn-primary">
+              <.link href={~p"/users/log_out"} method="delete">
+                Log out
+              </.link>
+            </li>
+          <% else %>
+            <li class="btn btn-primary">
+              <.link href={~p"/users/register"}>
+                Sign Up
+              </.link>
+            </li>
+            <li class="btn btn-primary">
+              <.link href={~p"/users/log_in"}>
+                Log In
+              </.link>
+            </li>
+          <% end %>
+        </ul>
+
+        <button class="nav-toggle-btn" aria-label="open manu" data-nav-toggler>
+          <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+        </button>
+
+        <div class="overlay" data-nav-toggler data-overlay></div>
+      </div>
+    </header>
+
+    <%= @inner_content %>
+
+    <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
+      <%= if @current_administrator do %>
+        <li class="text-[0.8125rem] leading-6 text-zinc-900">
+          <%= @current_administrator.full_name %>
+        </li>
+        <li>
+          <.link
+            href={~p"/administrators/settings"}
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Settings
+          </.link>
+        </li>
+        <li>
+          <.link
+            href={~p"/administrators/log_out"}
+            method="delete"
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Log out
+          </.link>
+        </li>
+      <% else %>
+        <li>
+          <.link
+            href={~p"/administrators/register"}
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Register
+          </.link>
+        </li>
+        <li>
+          <.link
+            href={~p"/administrators/log_in"}
+            class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
+          >
+            Log in
+          </.link>
+        </li>
+      <% end %>
+    </ul>
+    <!-- 
+    - custom js link
+  -->
+    <script src="./assets/js/script.js" defer>
+    </script>
+    <!-- 
+    - ionicon link
+  -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js">
+    </script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js">
+    </script>
+  </body>
+</html>
