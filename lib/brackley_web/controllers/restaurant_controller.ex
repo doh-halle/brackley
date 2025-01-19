@@ -4,24 +4,47 @@ defmodule BrackleyWeb.RestaurantController do
   alias Brackley.Administration
   alias Brackley.Administration.Restaurant
 
+  def index(conn, %{"search" => search}) do
+    restaurants = Administration.search_restaurants(search)
+    categories = Administration.list_categories()
+    category_list = Enum.map(categories, &{&1.title, &1.id})
+
+    render(
+      conn,
+      :index,
+      restaurants: restaurants,
+      categories: categories,
+      category_list: category_list
+    )
+  end
+
+  def index(conn, %{"category_id" => category_id}) do
+    restaurants = Administration.list_restaurants_by_category(category_id)
+    categories = Administration.list_categories()
+    category_list = Enum.map(categories, &{&1.title, &1.id})
+    IO.inspect(category_id, label: " this is the category_id -- ")
+
+    render(
+      conn,
+      :index,
+      restaurants: restaurants,
+      categories: categories,
+      category_list: category_list
+    )
+  end
+
   def index(conn, _params) do
     restaurants = Administration.list_restaurants()
     categories = Administration.list_categories()
     category_list = Enum.map(categories, &{&1.title, &1.id})
-    # category_id_list = Enum.map(category_list, fn {_, id} -> id end)
-    # category_title_list = Enum.map(category_list, fn {title, _} -> title end)
-    # IO.inspect(category_list, label: "These is the category list -- ")
-    # IO.inspect(category_id_list, label: "These  the category id list -- ")
-    # IO.inspect(category_title_list, label: "These are the category title list -- ")
-    render(conn,
-    :index,
-    restaurants: restaurants,
-    categories: categories,
-    category_list: category_list
-    # category_id_list: category_id_list,
-    # category_title_list: category_title_list
-    )
 
+    render(
+      conn,
+      :index,
+      restaurants: restaurants,
+      categories: categories,
+      category_list: category_list
+    )
   end
 
   def new(conn, _params) do
@@ -34,9 +57,8 @@ defmodule BrackleyWeb.RestaurantController do
         administrator_id: administrator_id,
         category_id: category_id
       })
+
     render(conn, :new, changeset: changeset, category_list: category_list)
-
-
   end
 
   def create(conn, %{"restaurant" => restaurant_params}) do

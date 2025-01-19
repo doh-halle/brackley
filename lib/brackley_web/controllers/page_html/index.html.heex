@@ -16,18 +16,18 @@
 
         <h1 class="h1 hero-title">Discover the Best Restaurants in England</h1>
 
-        <form action="" class="footer-form">
+        <div class="footer-form">
           <input
-            type="search"
-            name="email_address"
-            aria-label="search"
-            placeholder="Search for restaurants or Dishes"
+            type="text"
+            id="search_bar"
+            name="search"
+            placeholder="Search for restaurants"
             required
             class="search-field"
           />
 
-          <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+          <button onclick="searchRestaurants()" class="btn btn-primary">Search</button>
+        </div>
 
         <div class="social-wrapper">
           <p class="social-title">Connect with us:</p>
@@ -66,9 +66,17 @@
           <%= for category <- @categories do %>
             <div class="category-card">
               <h3 class="h3">
-                <.link href={~p"/categories/#{category.id}"} class="card-title">
+                <%!-- <.link href={~p"/categories/#{category.id}"} class="card-title">
                   <%= category.title %>
-                </.link>
+                </.link> --%>
+                <button
+                  class="card-title"
+                  onclick="filterCategory(value)"
+                  id="category_id"
+                  value={category.id}
+                >
+                  <%= category.title %> - <%= category.id %>
+                </button>
               </h3>
             </div>
           <% end %>
@@ -116,3 +124,14 @@
       -->
   </article>
 </main>
+<script>
+  function filterCategory(value) {
+    const category_id = value;
+    window.location.href = `/restaurants?category_id=${category_id}`;
+  }
+
+  function searchRestaurants() {
+    const search = document.getElementById("search_bar").value;
+    window.location.href = `/restaurants?search=${search}`;
+  }
+</script>

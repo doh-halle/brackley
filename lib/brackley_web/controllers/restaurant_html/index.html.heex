@@ -26,7 +26,45 @@
   </:action>
 </.table>
 
-<.table id="categories" rows={@categories}>
-  <:col :let={category} label="Restaurant Category"><%= category.title %></:col>
-  <:col :let={category} label="Category Id"><%= category.id %></:col>
-</.table>
+<section class="restaurant" aria-label="restaurant" id="restaurant">
+  <div class="container">
+    <div class="title-wrapper">
+      <h2 class="h2 section-title">Restaurants</h2>
+    </div>
+    <div class="grid-list">
+      <%= for restaurant <- @restaurants do %>
+        <.link href={~p"/restaurants/#{restaurant.id}"}>
+          <div class="restaurant-card">
+            <figure class="card-banner img-holder" style="--width:350px; --height: 300px">
+              <img
+                class="img-cover"
+                src={restaurant.image_url}
+                alt={restaurant.name}
+                loading="lazy"
+                width="350px"
+                height="300px"
+              />
+            </figure>
+            <div class="card-content">
+              <h3 class="h3 card-title">
+                <%= restaurant.name %>
+              </h3>
+              <p class="card-text">
+                <%= restaurant.description %>
+              </p>
+
+              <div class="card-footer">
+                <p class="card-text">
+                  <%= restaurant.address %>
+                </p>
+                <p class="card-text">
+                  <%= restaurant.phone_number %>
+                </p>
+              </div>
+            </div>
+          </div>
+        </.link>
+      <% end %>
+    </div>
+  </div>
+</section>

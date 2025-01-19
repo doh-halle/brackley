@@ -90,7 +90,10 @@ defmodule Brackley.Administration do
 
   """
   def change_administrator_registration(%Administrator{} = administrator, attrs \\ %{}) do
-    Administrator.registration_changeset(administrator, attrs, hash_password: false, validate_email: false)
+    Administrator.registration_changeset(administrator, attrs,
+      hash_password: false,
+      validate_email: false
+    )
   end
 
   ## Settings
@@ -154,7 +157,10 @@ defmodule Brackley.Administration do
 
     Ecto.Multi.new()
     |> Ecto.Multi.update(:administrator, changeset)
-    |> Ecto.Multi.delete_all(:tokens, AdministratorToken.by_administrator_and_contexts_query(administrator, [context]))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      AdministratorToken.by_administrator_and_contexts_query(administrator, [context])
+    )
   end
 
   @doc ~S"""
@@ -166,12 +172,21 @@ defmodule Brackley.Administration do
       {:ok, %{to: ..., body: ...}}
 
   """
-  def deliver_administrator_update_email_instructions(%Administrator{} = administrator, current_email, update_email_url_fun)
+  def deliver_administrator_update_email_instructions(
+        %Administrator{} = administrator,
+        current_email,
+        update_email_url_fun
+      )
       when is_function(update_email_url_fun, 1) do
-    {encoded_token, administrator_token} = AdministratorToken.build_email_token(administrator, "change:#{current_email}")
+    {encoded_token, administrator_token} =
+      AdministratorToken.build_email_token(administrator, "change:#{current_email}")
 
     Repo.insert!(administrator_token)
-    AdministratorNotifier.deliver_update_email_instructions(administrator, update_email_url_fun.(encoded_token))
+
+    AdministratorNotifier.deliver_update_email_instructions(
+      administrator,
+      update_email_url_fun.(encoded_token)
+    )
   end
 
   @doc """
@@ -207,7 +222,10 @@ defmodule Brackley.Administration do
 
     Ecto.Multi.new()
     |> Ecto.Multi.update(:administrator, changeset)
-    |> Ecto.Multi.delete_all(:tokens, AdministratorToken.by_administrator_and_contexts_query(administrator, :all))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      AdministratorToken.by_administrator_and_contexts_query(administrator, :all)
+    )
     |> Repo.transaction()
     |> case do
       {:ok, %{administrator: administrator}} -> {:ok, administrator}
@@ -256,14 +274,23 @@ defmodule Brackley.Administration do
       {:error, :already_confirmed}
 
   """
-  def deliver_administrator_confirmation_instructions(%Administrator{} = administrator, confirmation_url_fun)
+  def deliver_administrator_confirmation_instructions(
+        %Administrator{} = administrator,
+        confirmation_url_fun
+      )
       when is_function(confirmation_url_fun, 1) do
     if administrator.confirmed_at do
       {:error, :already_confirmed}
     else
-      {encoded_token, administrator_token} = AdministratorToken.build_email_token(administrator, "confirm")
+      {encoded_token, administrator_token} =
+        AdministratorToken.build_email_token(administrator, "confirm")
+
       Repo.insert!(administrator_token)
-      AdministratorNotifier.deliver_confirmation_instructions(administrator, confirmation_url_fun.(encoded_token))
+
+      AdministratorNotifier.deliver_confirmation_instructions(
+        administrator,
+        confirmation_url_fun.(encoded_token)
+      )
     end
   end
 
@@ -276,7 +303,8 @@ defmodule Brackley.Administration do
   def confirm_administrator(token) do
     with {:ok, query} <- AdministratorToken.verify_email_token_query(token, "confirm"),
          %Administrator{} = administrator <- Repo.one(query),
-         {:ok, %{administrator: administrator}} <- Repo.transaction(confirm_administrator_multi(administrator)) do
+         {:ok, %{administrator: administrator}} <-
+           Repo.transaction(confirm_administrator_multi(administrator)) do
       {:ok, administrator}
     else
       _ -> :error
@@ -286,7 +314,10 @@ defmodule Brackley.Administration do
   defp confirm_administrator_multi(administrator) do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:administrator, Administrator.confirm_changeset(administrator))
-    |> Ecto.Multi.delete_all(:tokens, AdministratorToken.by_administrator_and_contexts_query(administrator, ["confirm"]))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      AdministratorToken.by_administrator_and_contexts_query(administrator, ["confirm"])
+    )
   end
 
   ## Reset password
@@ -300,11 +331,20 @@ defmodule Brackley.Administration do
       {:ok, %{to: ..., body: ...}}
 
   """
-  def deliver_administrator_reset_password_instructions(%Administrator{} = administrator, reset_password_url_fun)
+  def deliver_administrator_reset_password_instructions(
+        %Administrator{} = administrator,
+        reset_password_url_fun
+      )
       when is_function(reset_password_url_fun, 1) do
-    {encoded_token, administrator_token} = AdministratorToken.build_email_token(administrator, "reset_password")
+    {encoded_token, administrator_token} =
+      AdministratorToken.build_email_token(administrator, "reset_password")
+
     Repo.insert!(administrator_token)
-    AdministratorNotifier.deliver_reset_password_instructions(administrator, reset_password_url_fun.(encoded_token))
+
+    AdministratorNotifier.deliver_reset_password_instructions(
+      administrator,
+      reset_password_url_fun.(encoded_token)
+    )
   end
 
   @doc """
@@ -343,7 +383,10 @@ defmodule Brackley.Administration do
   def reset_administrator_password(administrator, attrs) do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:administrator, Administrator.password_changeset(administrator, attrs))
-    |> Ecto.Multi.delete_all(:tokens, AdministratorToken.by_administrator_and_contexts_query(administrator, :all))
+    |> Ecto.Multi.delete_all(
+      :tokens,
+      AdministratorToken.by_administrator_and_contexts_query(administrator, :all)
+    )
     |> Repo.transaction()
     |> case do
       {:ok, %{administrator: administrator}} -> {:ok, administrator}
@@ -463,6 +506,13 @@ defmodule Brackley.Administration do
   end
 
   @doc """
+  Returns a list of restaurants for a given category
+  """
+  def list_restaurants_by_category(category_id) do
+    Repo.all(from r in Restaurant, where: r.category_id == ^category_id)
+  end
+
+  @doc """
   Gets a single restaurant.
 
   Raises `Ecto.NoResultsError` if the Restaurant does not exist.
@@ -477,6 +527,25 @@ defmodule Brackley.Administration do
 
   """
   def get_restaurant!(id), do: Repo.get!(Restaurant, id)
+
+  @doc """
+  Gets a single restaurant by name.
+
+  Raises `Ecto.NoResultsError` if the Restaurant does not exist.
+
+  ## Examples
+
+      iex> get_restaurant_by_name!("name")
+      %Restaurant{}
+
+      iex> get_restaurant_by_name!("name")
+      ** (Ecto.NoResultsError)
+
+  """
+
+  def search_restaurants(name) do
+    Repo.all(from r in Restaurant, where: ilike(r.name, ^"%#{name}%"))
+  end
 
   @doc """
   Creates a restaurant.
