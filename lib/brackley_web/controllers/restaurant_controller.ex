@@ -22,7 +22,7 @@ defmodule BrackleyWeb.RestaurantController do
     restaurants = Administration.list_restaurants_by_category(category_id)
     categories = Administration.list_categories()
     category_list = Enum.map(categories, &{&1.title, &1.id})
-    IO.inspect(category_id, label: " this is the category_id -- ")
+    # IO.inspect(category_id, label: " this is the category_id -- ")
 
     render(
       conn,
